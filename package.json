@@ -15,5 +15,10 @@
     "dotenv": "16.0.1",
     "nodemon": "^2.0.16",
     "prettier": "^2.6.2"
+  },
+  "dependencies": {
+    "twitter-api-v2": "^1.12.2",
+    "twitter": "1.7.1",
+    "dotenv": "16.0.1"
   }
 }

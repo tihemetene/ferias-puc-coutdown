@@ -1,14 +1,16 @@
 const dotenv = require('dotenv')
-const Twitter = require('twitter')
+const twitterApi = require('twitter-api-v2').default;
 
 dotenv.config({ path: './config.env' });
 
-const TwitterClient = new Twitter({
-    consumer_key: process.env.TWITTER_CONSUMER_KEY,
-    consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
-    access_token_key: process.env.TWITTER_ACCESS_KEY,
-    access_token_secret: process.env.TWITTER_ACCESS_SECRET
+const TwitterClient = new twitterApi({
+    appKey: process.env.API_KEY,
+    appSecret: process.env.APP_SECRET,
+    accessToken: process.env.ACCESS_TOKEN,
+    accessSecret: process.env.ACCESS_SECRET
 });
+
+const rwClient = TwitterClient.readWrite;
 
 const dataDasFerias = '07/04/2022'; // Manter data em padrão americano pra não precisar ficar convertendo 💀
 const dataDasAulas = '08/01/2022'; // ☝
@@ -23,43 +25,20 @@ const calculaDataFerias = (ehDataFerias = true) => {
 }
 
 const postar = async () => {
-    const qtdDias = calculaDataFerias(true);
-    const qtdDiasAulas = calculaDataFerias(false);
-    console.log(qtdDias + 1);
-
-    if(qtdDias >= 0) {
-        TwitterClient.post(
-            'statuses/update',
-            {
-                status: qtdDias === 0 ? 'As férias chegaram!' : `Faltam ${qtdDias} para as férias!`
-            },
-             function (error, tweet, response) {
-                 if (!error) {
-                     console.log(tweet)
-                 }
-                 else if (error) {
-                     console.log(error)
-                 }
-             }
-        );
-    }
-
-    if(qtdDias < 0) {
-        TwitterClient.post(
-            'statuses/update',
-            {
-                status:`Faltam ${qtdDiasAulas} para o início das aulas :(`
-            },
-             function (error, tweet, response) {
-                 if (!error) {
-                     console.log(tweet)
-                 }
-                 else if (error) {
-                     console.log(error)
-                 }
-             }
-        );
-    }
+    try {
+        const qtdDias = calculaDataFerias(true);
+        const qtdDiasAulas = calculaDataFerias(false);
+        console.log(qtdDias + 1);
+    
+        if(qtdDias >= 0) {
+            await rwClient.v1.tweet(qtdDias === 0 ? "É férias caraio 🎉✨🎇🎉" : `Faltam ${qtdDias} dia(s) para as férias!`);
+        }
+        if(qtdDias < 0) {
+            await rwClient.v1.tweet(`Faltam ${qtdDiasAulas} dia(s) para as aulas voltarem...`)
+        } 
+    } catch (e) {
+        console.error(e);
+    }    
 }
 
 postar();
