@@ -12,7 +12,7 @@ const TwitterClient = new twitterApi({
 
 const rwClient = TwitterClient.readWrite;
 
-const dataDasFerias = '07/04/2022'; // Manter data em padrão americano pra não precisar ficar convertendo 💀
+const dataDasFerias = '07/08/2022'; // Manter data em padrão americano pra não precisar ficar convertendo 💀
 const dataDasAulas = '08/01/2022'; // ☝
 const dataAtual = new Date().getTime();
 const dias = 1000 * 60 * 60 * 24;
