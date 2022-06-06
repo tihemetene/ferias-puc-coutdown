@@ -31,10 +31,10 @@ const postar = async () => {
         console.log(qtdDias + 1);
     
         if(qtdDias >= 0) {
-            await rwClient.v1.tweet(qtdDias === 0 ? "É férias caraio 🎉✨🎇🎉" : `Faltam ${qtdDias} dia(s) para as férias!`);
+            await rwClient.v1.tweet(qtdDias === 0 ? "É férias caraio 🎉✨🎇🎉" : qtdDias === 1 ? `FALTA ${qtdDias} DIA PARA AS FÉRIAS!` : `Faltam ${qtdDias} dias para as férias!`);
         }
         if(qtdDias < 0) {
-            await rwClient.v1.tweet(`Faltam ${qtdDiasAulas} dia(s) para as aulas voltarem...`)
+            await rwClient.v1.tweet(qtdDiasAulas === 1 ? `FALTA ${qtdDiasAulas} DIA PARA A VOLTA AS AULAS!` : `Faltam ${qtdDiasAulas} dia(s) para as aulas voltarem...`)
         } 
     } catch (e) {
         console.error(e);
