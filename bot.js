@@ -20,15 +20,18 @@ const dias = 1000 * 60 * 60 * 24;
 const calculaDataFerias = (ehDataFerias = true) => {
     const data1 = Math.round(Date.parse(ehDataFerias ? dataDasFerias : dataDasAulas) / dias);
     const data2 = Math.round((dataAtual) / dias);
+    // console.log(data1, data2)
     const qtdDias = data1 - data2;
+    // console.log(qtdDias)
     return qtdDias;
 }
 
 const postar = async () => {
     try {
-        const qtdDias = calculaDataFerias(true);
-        const qtdDiasAulas = calculaDataFerias(false);
-        console.log(qtdDias + 1);
+        const qtdDias = calculaDataFerias(true) + 1;
+        const qtdDiasAulas = calculaDataFerias(false) + 1;
+        console.log('Dias para as férias: ', qtdDias);
+        console.log('Dias para as aulas: ', qtdDiasAulas);
     
         if(qtdDias >= 0) {
             await rwClient.v1.tweet(qtdDias === 0 ? "É férias caraio 🎉✨🎇🎉" : qtdDias === 1 ? `FALTA ${qtdDias} DIA PARA AS FÉRIAS!` : `Faltam ${qtdDias} dias para as férias!`);
