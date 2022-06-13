@@ -18,7 +18,7 @@ const dataDasAulas = '08/01/2022'; // ☝
 const dias = 1000 * 60 * 60 * 24;
 
 const calculaDataFerias = (ehDataFerias = true) => {
-    const dataAtual = new Date().getTime();
+    const dataAtual = new Date();
     const data1 = Math.round(Date.parse(ehDataFerias ? dataDasFerias : dataDasAulas) / dias);
     const data2 = Math.round((dataAtual.getTime()) / dias);
     // console.log(data1, data2)
@@ -33,12 +33,11 @@ const postar = async () => {
         const qtdDiasAulas = calculaDataFerias(false) + 1;
         console.log('Dias para as férias: ', qtdDias);
         console.log('Dias para as aulas: ', qtdDiasAulas);
-    
         if(qtdDias >= 0) {
-            //await rwClient.v1.tweet(qtdDias === 0 ? "É férias caraio 🎉✨🎇🎉" : qtdDias === 1 ? `FALTA ${qtdDias} DIA PARA AS FÉRIAS!` : `Faltam ${qtdDias} dias para as férias!`);
+            await rwClient.v1.tweet(qtdDias === 0 ? "É férias caraio 🎉✨🎇🎉" : qtdDias === 1 ? `FALTA ${qtdDias} DIA PARA AS FÉRIAS!` : `Faltam ${qtdDias} dias para as férias!`);
         }
         if(qtdDias < 0) {
-            //await rwClient.v1.tweet(qtdDiasAulas === 1 ? `FALTA ${qtdDiasAulas} DIA PARA A VOLTA AS AULAS!` : `Faltam ${qtdDiasAulas} dia(s) para as aulas voltarem...`)
+            await rwClient.v1.tweet(qtdDiasAulas === 1 ? `FALTA ${qtdDiasAulas} DIA PARA A VOLTA AS AULAS!` : `Faltam ${qtdDiasAulas} dia(s) para as aulas voltarem...`)
         } 
     } catch (e) {
         console.error(e);
